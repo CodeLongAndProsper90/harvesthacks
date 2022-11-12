@@ -109,12 +109,19 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-		print(compute([AlarmTone(niceness: 0.7, audio_file:"", vol:[VolCurve(volume: 0, at: DateTime.now())])], 0, 50).niceness);
-		final player = AudioPlayer();                   // Create a player
-		final duration = await player.setUrl("https://0x0.st/o6Vm.wav");                 // Schemes: (https: | file: | asset: )
-		
-		player.play();        
-	},
+          print(compute([
+            AlarmTone(
+                niceness: 0.7,
+                audio_file: "",
+                vol: [VolCurve(volume: 0, at: DateTime.now())])
+          ], 0, 50)
+              .niceness);
+          final player = AudioPlayer(); // Create a player
+          final duration = await player.setUrl(
+              "https://0x0.st/o6Vm.wav"); // Schemes: (https: | file: | asset: )
+
+          player.play();
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

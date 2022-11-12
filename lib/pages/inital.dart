@@ -1,21 +1,10 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-
-class Rizen extends StatefulWidget {
-  const Rizen({super.key});
-
-  @override
-  State<Rizen> createState() => _RizenState();
-}
-
-class _RizenState extends State<Rizen> {
-=======
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/widgets/logo.dart';
 
 class InitialPage extends StatefulWidget {
-  const InitialPage({Key? key}) : super(key: key);
+  //const InitialPage({Key? key}) : super(key: key);
 
   @override
   State<InitialPage> createState() => _InitialPageState();
@@ -26,6 +15,14 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
     duration: const Duration(seconds: 5),
     vsync: this,
   )..repeat(reverse: true);
+
+  late final Animation<Offset> _offsetAnimation = Tween<Offset>(
+    begin: Offset.zero,
+    end: const Offset(1.5, 0.0),
+  ).animate(CurvedAnimation(
+    parent: _controller,
+    curve: Curves.elasticIn,
+  ));
   @override
   void dispose() {
     _controller.dispose();
@@ -55,15 +52,20 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
 				child: Center(
 					child: Column(
 						children: [
-							Logo(height: 200, width: 200),
 							Text(
 								"Risin'",
 								style: TextStyle(
 									fontSize: 36.0
 								),
 							),
-							Text("Press me to start")
-							
+							Text("Press me to start"),
+							SlideTransition(
+								position: _offsetAnimation,
+								child: const Padding(
+									padding: EdgeInsets.all(8.0),
+									child: FlutterLogo(size: 150.0),
+								),
+							)
 						]
 						)
 					)

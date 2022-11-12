@@ -10,7 +10,8 @@ class InitialPage extends StatefulWidget {
   State<InitialPage> createState() => _InitialPageState();
 }
 
-class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
+class _InitialPageState extends State<InitialPage>
+    with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 5),
     vsync: this,
@@ -30,75 +31,66 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
   }
 
   Widget build(BuildContext context) {
-		var morning_grad = [
-			Colors.cyan.shade100,
-			Colors.yellow.shade100
-		];
+    var morning_grad = [Colors.cyan.shade100, Colors.yellow.shade100];
 
-		var evening_grad = [
-			Colors.deepOrange.shade400,
-			Colors.yellow.shade100
-		];
+    var afternoon_grad = [
+      Color(0xFF56CCF2),
+      Color(0xFF2F80ED),
+    ];
 
-		var night_grad = [
-			Colors.grey.shade600,
-			Colors.indigo.shade900,
-			Colors.blue.shade900
-		];
+    var evening_grad = [
+      Color(0xFFFA8072),
+      Colors.yellow.shade100,
+    ];
 
-		Color textcolor = Colors.black;
-		List<Color> chosen;
-		DateTime n = DateTime.now();
-		if (n.hour >= 17)
-			chosen = evening_grad;
-		else if (n.hour >= 19) {
-				chosen = night_grad;
-				textcolor = Colors.white;
-			}
-		else
-			chosen = morning_grad;
+    var night_grad = [Color(0xFF01426D), Color(0xFF01162E)];
 
- 
-    return Scaffold(
-			body: LayoutBuilder(
-			builder: (BuildContext context, BoxConstraints constraints) {
-				final Size biggest = constraints.biggest;
-				return GestureDetector(
-				onTap: () {
-					print("Going to move to the next page");
-				},
-				child: Container(
-				decoration: BoxDecoration(
-					gradient: LinearGradient(
-						begin: Alignment.bottomLeft,
-						end: Alignment.topRight,
-						colors: chosen
-					)
-				),
-				child: Center(
-					child: Column(
-						mainAxisAlignment: MainAxisAlignment.center,
-						crossAxisAlignment: CrossAxisAlignment.center,
-						children: [
-							Spacer(),
-							SlideTransition(
-								position: _offsetAnimation,
-								child: Image.asset("images/sun.png", width: 75, height: 75),
-								),
-							Text(
-								"Risin'",
-								style: TextStyle(
-									fontSize: 36.0,
-									color: textcolor
-								),
-							),
-							Text("Press me to start"),
-							Spacer(),
-						]
-						)
-					)
-				));
-			}
-		));
+    Color textcolor = Colors.black;
+    List<Color> chosen;
+    DateTime n = DateTime.now();
+
+    if (n.hour >= 12) {
+      chosen = afternoon_grad;
+    } else if (n.hour >= 17 && n.hour <= 19) {
+      chosen = evening_grad;
+    } else if (n.hour >= 19) {
+      chosen = night_grad;
+      textcolor = Colors.white;
+    } else {
+      chosen = morning_grad;
+    }
+
+    return Scaffold(body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      final Size biggest = constraints.biggest;
+      return GestureDetector(
+          onTap: () {
+            print("Going to move to the next page");
+          },
+          child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: chosen)),
+              child: Center(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                    Spacer(),
+                    SlideTransition(
+                      position: _offsetAnimation,
+                      child:
+                          Image.asset("images/sun.png", width: 75, height: 75),
+                    ),
+                    Text(
+                      "Risin'",
+                      style: TextStyle(fontSize: 36.0, color: textcolor),
+                    ),
+                    Text("Press me to start"),
+                    Spacer(),
+                  ]))));
+    }));
   }
 }

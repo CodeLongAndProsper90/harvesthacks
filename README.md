@@ -1,16 +1,9 @@
-# risin
+# Risin'
 
-A new Flutter project.
+Risin' is an alarm clock that adapts to your schedule. It changes your alarm based on how fast you turn it off. We made this with Flutter and Dart.
 
-## Getting Started
+## Sympathy System
+The sympathy for your alarms are based on the time period you turn it off. So for example, if you were to snooze your alarm for 1 minute after it goes off, the niceness scale decreases. This decrease changes the sound of your next upcoming awakening alarm.  This uses the idea of punishment and reinforcement. 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Our app is harvest themed by helping farmers wake up to harvest their crops 👍

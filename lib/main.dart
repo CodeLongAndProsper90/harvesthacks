@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:risin/pages/alarm.dart';
+import 'package:risin/pages/qrscanner.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/inital.dart';
 
@@ -87,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: InitialPage(),
+      body: const AlarmPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           print(compute([

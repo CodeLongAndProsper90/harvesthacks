@@ -18,15 +18,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
 				textTheme: TextTheme(
 					displaySmall: TextStyle(
@@ -84,30 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: const AlarmPage(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          print(compute([
-            AlarmTone(
-                niceness: 0.7,
-                audio_file: "",
-                vol: [VolCurve(volume: 0, at: DateTime.now())])
-          ], 0, 50)
-              .niceness);
-          final player = AudioPlayer(); // Create a player
-          final duration = await player.setUrl(
-              "https://0x0.st/o6Vm.wav"); // Schemes: (https: | file: | asset: )
-
-          player.play();
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: InitialPage(),
     );
   }
 }

@@ -28,7 +28,13 @@ class Alarm {
 	}
 }
 
-Future<void> save_alarms(List<Alarm> alarms) async {
+Future<void> add_alarm(Alarm a) async {
+	var alarms = await get_alarms();
+	alarms += [a];
+	await save_alarms(alarms);
+}
+
+Future<void> save_alarms(List<dynamic> alarms) async {
 	String path = (await getApplicationDocumentsDirectory()).path + "/data.json";
 	File f = await (File(path).create());
 	f.writeAsString(json.encode(alarms));

@@ -4,6 +4,7 @@ import 'package:risin/pages/alarm.dart';
 import 'package:risin/pages/qrscanner.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/initial.dart';
+import 'package:risin/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: AlarmPage(stopMethod: AlarmStopMethod.qrscan,),
+      body: HomePage()
     );
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
-import 'package:risin/widgets/logo.dart';
+import 'package:risin/pages/inital_alarm.dart';
+import 'package:risin/widgets/time_bg.dart';
 
 class InitialPage extends StatefulWidget {
   //const InitialPage({Key? key}) : super(key: key);
@@ -10,7 +11,8 @@ class InitialPage extends StatefulWidget {
   State<InitialPage> createState() => _InitialPageState();
 }
 
-class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
+class _InitialPageState extends State<InitialPage>
+    with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 5),
     vsync: this,
@@ -18,10 +20,10 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
 
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
     begin: Offset.zero,
-    end: const Offset(1.5, 0.0),
+    end: const Offset(0, -0.5),
   ).animate(CurvedAnimation(
     parent: _controller,
-    curve: Curves.elasticIn,
+    curve: Curves.bounceIn,
   ));
   @override
   void dispose() {
@@ -30,42 +32,38 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
   }
 
   Widget build(BuildContext context) {
+ 
     return Scaffold(
 			body: LayoutBuilder(
 			builder: (BuildContext context, BoxConstraints constraints) {
 				final Size biggest = constraints.biggest;
 				return GestureDetector(
 				onTap: () {
-					print("Going to move to the next page");
+					Navigator.push(
+							context,
+							MaterialPageRoute(builder: (context) => InitialAlarmPage()),
+						);
 				},
-				child: Container(
-				decoration: BoxDecoration(
-					gradient: LinearGradient(
-						begin: Alignment.bottomLeft,
-						end: Alignment.topRight,
-						colors: [
-							Colors.cyan.shade100,
-							Colors.yellow.shade100
-						]
-					)
-				),
-				child: Center(
+				child: TimeBg(
+					child: Center(
 					child: Column(
+						mainAxisAlignment: MainAxisAlignment.center,
+						crossAxisAlignment: CrossAxisAlignment.center,
 						children: [
+							Spacer(),
+							SlideTransition(
+								position: _offsetAnimation,
+								child: Image.asset("images/sun.png", width: 75, height: 75),
+								),
 							Text(
 								"Risin'",
 								style: TextStyle(
-									fontSize: 36.0
+									fontSize: 36.0,
+									color: DateTime.now().hour >= 19 ? Colors.white : Colors.black,
 								),
 							),
 							Text("Press me to start"),
-							SlideTransition(
-								position: _offsetAnimation,
-								child: const Padding(
-									padding: EdgeInsets.all(8.0),
-									child: FlutterLogo(size: 150.0),
-								),
-							)
+							Spacer(),
 						]
 						)
 					)

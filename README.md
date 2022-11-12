@@ -1,5 +1,4 @@
 # Risin'
-## About Our Project
 
 Risin' is an alarm clock that adapts to your schedule. It changes your alarm based on how fast you turn it off. We made this with Flutter and Dart.
 

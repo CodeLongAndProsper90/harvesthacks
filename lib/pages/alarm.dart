@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
-import 'package:material_clock/material_clock.dart' as materialClock;
+import 'package:analog_clock/analog_clock.dart';
 
 class AlarmPage extends StatefulWidget {
   const AlarmPage({Key? key}) : super(key: key);
@@ -22,14 +22,16 @@ class _AlarmPageState extends State<AlarmPage> {
             "Time to wake up!",
             style: TextStyle(fontSize: 40),
           ),
-          materialClock.Clock(
-            theme: Brightness.light,
-            backgroundStyle: PaintingStyle.stroke,
-            secondHandColor: Colors.red,
-            alignment: Alignment.center,
-            live: true,
-            size: 200.0,
-            time: DateTime.now(),
+          AnalogClock(
+						decoration: BoxDecoration(
+							border: Border.all(width: 2.0, color: Colors.black),
+							color: Colors.transparent,
+							shape: BoxShape.circle),
+						showSecondHand: false,
+            isLive: false,
+            width: 200.0,
+						height: 200.0,
+            datetime: DateTime.now(),
           ),
           const Expanded(child: SizedBox.shrink()),
           Row(

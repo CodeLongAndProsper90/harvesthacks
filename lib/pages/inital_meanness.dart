@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:risin/widgets/time_bg.dart';
-import 'package:risin/pages/initial.dart';
+import 'package:risin/pages/home_page.dart';
 
 class InitialMeannessPage extends StatefulWidget {
 	
@@ -49,10 +49,13 @@ class InitialMeannessState extends State<InitialMeannessPage> {
 							),
 							TextButton(
 								child: Text("Let's go"),
+								style: TextButton.styleFrom(
+									foregroundColor: Colors.black
+								),
 								onPressed: () {
 									Navigator.push(
 									context,
-									MaterialPageRoute(builder: (context) => InitialPage()));
+									MaterialPageRoute(builder: (context) => HomePage()));
 								}
 							),
 							Spacer()

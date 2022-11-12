@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_alarm_background_trigger: ^1.0.1
   just_audio: ^0.9.30
+  material_clock: any
+  
 
 dev_dependencies:
   flutter_test:

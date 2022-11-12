@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AnalogClock extends StatelessWidget {
-  const AnalogClock({super.key});
+class AnalogClockk extends StatelessWidget {
+  const AnalogClockk({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:risin/system/compute_alarm.dart';
 
 void main() {
   runApp(const MyApp());
@@ -108,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+		print(compute([AlarmTone(niceness: 0.7, audio_file:"", vol:[VolCurve(volume: 0, at: DateTime.now())])], 0, 50).niceness);
 		final player = AudioPlayer();                   // Create a player
 		final duration = await player.setUrl("https://0x0.st/o6Vm.wav");                 // Schemes: (https: | file: | asset: )
 		

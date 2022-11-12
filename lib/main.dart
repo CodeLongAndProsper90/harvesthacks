@@ -6,10 +6,23 @@ import 'package:risin/pages/qrscanner.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/initial.dart';
 import 'package:risin/pages/home_page.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+Future<bool> isFresh() async {
+	String path = (await getApplicationDocumentsDirectory()).path + "/used";
+	File f = await (File(path).create());
+	String s = await f.readAsString();
+	bool b = s == "1";
+	if (!b)
+		f.writeAsString("1");
+	return b;
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -63,8 +76,18 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      body: HomePage()
-    );
-  }
+    return FutureBuilder(
+			future: isFresh(),
+			builder: (BuildContext context, AsyncSnapshot<bool> data) {
+				if (data.hasData) {
+					return Scaffold(
+						body: data.data! ? HomePage() : InitialPage()
+					);
+				} else {
+					return CircularProgressIndicator();
+				}
+			}
+		);
+
+	}
 }

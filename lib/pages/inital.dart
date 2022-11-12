@@ -1,4 +1,15 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+
+class Rizen extends StatefulWidget {
+  const Rizen({super.key});
+
+  @override
+  State<Rizen> createState() => _RizenState();
+}
+
+class _RizenState extends State<Rizen> {
+=======
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/widgets/logo.dart';
@@ -15,7 +26,6 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
     duration: const Duration(seconds: 5),
     vsync: this,
   )..repeat(reverse: true);
-
   @override
   void dispose() {
     _controller.dispose();

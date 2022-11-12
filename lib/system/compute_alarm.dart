@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+
+=======
 class AlarmTone {
   final double niceness;
   final String audio_file; // The asset path
@@ -25,3 +28,4 @@ AlarmTone compute(
   l.shuffle();
   return l[0];
 }
+>>>>>>> 63032862352930ef46663280173babbd3a98fd51

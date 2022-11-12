@@ -39,6 +39,8 @@ dependencies:
   flutter_alarm_background_trigger: ^1.0.1
   just_audio: ^0.9.30
   material_clock: any
+  svgator_player_flutter: ^2.0.0
+  webview_flutter: any
   
 
 dev_dependencies:
@@ -62,6 +64,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - images/
+    - audio/
 
   fonts:
     - family: Red Hat Text

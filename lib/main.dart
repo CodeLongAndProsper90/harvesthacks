@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+<<<<<<< HEAD
+import 'package:risin/pages/analog.dart';
+=======
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/inital.dart';
+<<<<<<< HEAD
 import 'package:risin/widgets/logo.dart';
+=======
+>>>>>>> 63032862352930ef46663280173babbd3a98fd51
+>>>>>>> 7d531de218a4519835b86263b4f461d3f0af4939
 
 void main() {
   runApp(const MyApp());
@@ -17,15 +24,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
 				textTheme: TextTheme(
 					displaySmall: TextStyle(

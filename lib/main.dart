@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
 				textTheme: TextTheme(
 					displaySmall: TextStyle(
 						fontFamily: "Red Hat Text",
-						fontSize: 36.0,
 					),
 					bodyMedium: TextStyle(
 						fontFamily: "Red Hat Text"

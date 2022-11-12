@@ -39,6 +39,7 @@ dependencies:
   flutter_alarm_background_trigger: ^1.0.1
   just_audio: ^0.9.30
   material_clock: any
+  qr_code_scanner: ^1.0.1
   svgator_player_flutter: ^2.0.0
   webview_flutter: any
   

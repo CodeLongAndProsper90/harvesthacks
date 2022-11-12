@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/inital.dart';
+import 'package:risin/widgets/logo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -82,30 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       body: InitialPage(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          print(compute([
-            AlarmTone(
-                niceness: 0.7,
-                audio_file: "",
-                vol: [VolCurve(volume: 0, at: DateTime.now())])
-          ], 0, 50)
-              .niceness);
-          final player = AudioPlayer(); // Create a player
-          final duration = await player.setUrl(
-              "https://0x0.st/o6Vm.wav"); // Schemes: (https: | file: | asset: )
-
-          player.play();
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
+import 'package:risin/pages/inital.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,16 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+				textTheme: TextTheme(
+					displaySmall: TextStyle(
+						fontFamily: "Red Hat Text",
+						fontSize: 36.0,
+					),
+					bodyMedium: TextStyle(
+						fontFamily: "Red Hat Text"
+					),
+
+				)
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -77,36 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+      body: InitalPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
 		print(compute([AlarmTone(niceness: 0.7, audio_file:"", vol:[VolCurve(volume: 0, at: DateTime.now())])], 0, 50).niceness);

@@ -11,21 +11,19 @@ class TimeBg extends StatefulWidget {
 class TimeBgState extends State<TimeBg> {
 
 	Widget build(BuildContext context) {
-		var morning_grad = [
-			Colors.cyan.shade100,
-			Colors.yellow.shade100
-		];
+    var morning_grad = [Colors.cyan.shade100, Colors.yellow.shade100];
 
-		var evening_grad = [
-			Colors.deepOrange.shade400,
-			Colors.yellow.shade100
-		];
+    var afternoon_grad = [
+      Color(0xFF56CCF2),
+      Color(0xFF2F80ED),
+    ];
 
-		var night_grad = [
-			Colors.grey.shade600,
-			Colors.indigo.shade900,
-			Colors.blue.shade900
-		];
+    var evening_grad = [
+      Color(0xFFFA8072),
+      Colors.yellow.shade100,
+    ];
+
+    var night_grad = [Color(0xFF01426D), Color(0xFF01162E)];
 
 		final List<Color> chosen;
 		DateTime n = DateTime.now();
@@ -33,8 +31,11 @@ class TimeBgState extends State<TimeBg> {
 			chosen = evening_grad;
 		else if (n.hour >= 19)
 			chosen = night_grad;
+		else if (n.hour >= 12)
+			chosen = afternoon_grad;
 		else
 			chosen = morning_grad;
+
 		return Scaffold(
 			body: Container(
 				decoration: BoxDecoration(

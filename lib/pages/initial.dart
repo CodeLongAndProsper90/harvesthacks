@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/inital_alarm.dart';
+import 'package:risin/widgets/time_bg.dart';
 
 class InitialPage extends StatefulWidget {
   //const InitialPage({Key? key}) : super(key: key);
@@ -10,7 +11,8 @@ class InitialPage extends StatefulWidget {
   State<InitialPage> createState() => _InitialPageState();
 }
 
-class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
+class _InitialPageState extends State<InitialPage>
+    with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 5),
     vsync: this,
@@ -30,34 +32,6 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
   }
 
   Widget build(BuildContext context) {
-		var morning_grad = [
-			Colors.cyan.shade100,
-			Colors.yellow.shade100
-		];
-
-		var evening_grad = [
-			Colors.deepOrange.shade400,
-			Colors.yellow.shade100
-		];
-
-		var night_grad = [
-			Colors.grey.shade600,
-			Colors.indigo.shade900,
-			Colors.blue.shade900
-		];
-
-		Color textcolor = Colors.black;
-		List<Color> chosen;
-		DateTime n = DateTime.now();
-		if (n.hour >= 17)
-			chosen = evening_grad;
-		else if (n.hour >= 19) {
-				chosen = night_grad;
-				textcolor = Colors.white;
-			}
-		else
-			chosen = morning_grad;
-
  
     return Scaffold(
 			body: LayoutBuilder(
@@ -70,15 +44,8 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
 							MaterialPageRoute(builder: (context) => InitialAlarmPage()),
 						);
 				},
-				child: Container(
-				decoration: BoxDecoration(
-					gradient: LinearGradient(
-						begin: Alignment.bottomLeft,
-						end: Alignment.topRight,
-						colors: chosen
-					)
-				),
-				child: Center(
+				child: TimeBg(
+					child: Center(
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.center,
 						crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,7 +59,7 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
 								"Risin'",
 								style: TextStyle(
 									fontSize: 36.0,
-									color: textcolor
+									color: DateTime.now().hour >= 19 ? Colors.white : Colors.black,
 								),
 							),
 							Text("Press me to start"),

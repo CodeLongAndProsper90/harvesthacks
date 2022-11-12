@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/pages/alarm.dart';
+import 'package:risin/pages/analog.dart';
 import 'package:risin/pages/qrscanner.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/initial.dart';
+import 'package:risin/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-				textTheme: TextTheme(
+				textTheme: const TextTheme(
 					displaySmall: TextStyle(
 						fontFamily: "Red Hat Text",
 					),
@@ -55,15 +57,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+
   }
 
   @override
@@ -75,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: AlarmPage(stopMethod: AlarmStopMethod.qrscan,),
+      body: HomePage()
     );
   }
 }

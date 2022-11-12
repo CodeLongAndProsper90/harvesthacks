@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+<<<<<<< HEAD
 import 'package:risin/pages/analog.dart';
+=======
+import 'package:risin/system/compute_alarm.dart';
+import 'package:risin/pages/inital.dart';
+>>>>>>> 63032862352930ef46663280173babbd3a98fd51
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +21,15 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+				textTheme: TextTheme(
+					displaySmall: TextStyle(
+						fontFamily: "Red Hat Text",
+					),
+					bodyMedium: TextStyle(
+						fontFamily: "Red Hat Text"
+					),
+
+				)
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -68,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
+<<<<<<< HEAD
       body: const Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -75,6 +90,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+=======
+      body: InitialPage(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          print(compute([
+            AlarmTone(
+                niceness: 0.7,
+                audio_file: "",
+                vol: [VolCurve(volume: 0, at: DateTime.now())])
+          ], 0, 50)
+              .niceness);
+>>>>>>> 63032862352930ef46663280173babbd3a98fd51
           final player = AudioPlayer(); // Create a player
           final duration = await player.setUrl(
               "https://0x0.st/o6Vm.wav"); // Schemes: (https: | file: | asset: )

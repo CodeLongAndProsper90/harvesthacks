@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/system/compute_alarm.dart';
-import 'package:risin/widgets/logo.dart';
+import 'package:risin/pages/inital_alarm.dart';
 
 class InitialPage extends StatefulWidget {
   //const InitialPage({Key? key}) : super(key: key);
@@ -65,7 +65,10 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
 				final Size biggest = constraints.biggest;
 				return GestureDetector(
 				onTap: () {
-					print("Going to move to the next page");
+					Navigator.push(
+							context,
+							MaterialPageRoute(builder: (context) => InitialAlarmPage()),
+						);
 				},
 				child: Container(
 				decoration: BoxDecoration(

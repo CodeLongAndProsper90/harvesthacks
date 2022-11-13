@@ -41,6 +41,7 @@ dependencies:
   analog_clock: any
   qr_code_scanner: ^1.0.1
   path_provider: any
+  g_json: any
   
 
 dev_dependencies:

@@ -1,7 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:g_json/g_json.dart';
 
 T? cast<T>(x) => x is T ? x : null;
 
@@ -26,16 +27,13 @@ class Alarm {
 			"name": name
 		};
 	}
-	Alarm fromJson(Map<String, dynamic> j) {
-		return Alarm(
-			at: TimeOfDay.fromDateTime(DateTime.parse(j["at"]))!,
-			repeat_weekly: j["repeat"],
-			time_to_wake: j["time_to_wake"],
-			last_timezone: j["last_timezone"],
-			prev_meanness: j["prev_meanness"],
-			name: j["name"]
-		);
-	}
+	Alarm.fromJson(Map<String, JSON> j) : 
+			at = TimeOfDay.fromDateTime(DateTime.parse(j!["at"]!.stringValue))!,
+			repeat_weekly = j!["repeat"]!.booleanValue,
+			time_to_wake = j!["time_to_wake"]!.integerValue,
+			last_timezone = j!["last_timezone"]!.integerValue,
+			prev_meanness = j!["prev_meanness"]!.ddoubleValue,
+			name = j!["name"]!.stringValue;
 }
 
 Future<void> add_alarm(Alarm a) async {
@@ -63,9 +61,15 @@ Future<List<Alarm>> get_alarms() async {
 	if (data_s == "")
 		return [];
 	print(data_s);
-	List<dynamic> data = json.decode(data_s);
-	List<Alarm> fin = data.cast<Alarm>();
-	print(fin);
+	List<JSON> data = JSON.parse(data_s).list!;
+	List<Alarm> fin = [];
+	print("New list made");
+	print(data.length);
+	for (var j in data) {
+		Alarm a = Alarm.fromJson(j.mapValue);
+		fin.add(a);
+	}
+	print("Returning");
 	return fin;
 }
 

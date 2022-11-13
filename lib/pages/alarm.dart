@@ -48,6 +48,7 @@ class _AlarmPageState extends State<AlarmPage> {
     return FutureBuilder(
 		future: player.setUrl("asset:${widget.sound.file}"),
 		builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+		print("BOOP");
 		player.play();
 		return Container(
       padding: const EdgeInsets.all(10.0),

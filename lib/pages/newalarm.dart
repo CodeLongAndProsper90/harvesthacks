@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:risin/system/alarms.dart';
+import 'package:flutter_alarm_background_trigger/flutter_alarm_background_trigger.dart';
+import 'package:flutter_alarm_background_trigger/alarm_methods.dart';
 
 class NewAlarmPage extends StatefulWidget {
   late final Alarm alarm;
@@ -40,6 +42,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 
   @override
   Widget build(BuildContext context) {
+		var alarmPlugin = FlutterAlarmBackgroundTrigger();
     return Scaffold(
         body: Center(
             child: Column(
@@ -71,6 +74,17 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
 				TextButton(
 				onPressed: () async {
 					await add_alarm(widget.alarm);
+					alarmPlugin.addAlarm(
+							// Required
+							DateTime.now().add(Duration(seconds: 10)),
+
+							//Optional
+							payload: {"timezone_delta":0, "time_to_wake":widget.alarm.time_to_wake, "prev_meanness":widget.alarm.prev_meanness}, 
+
+							// screenWakeDuration: For how much time you want 
+							// to make screen awake when alarm triggered
+							screenWakeDuration: Duration(minutes: 1)
+					);
 					print(await get_alarms());
 					Navigator.pop(context);
 				},

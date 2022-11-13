@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:risin/system/alarms.dart';
 
 class AlarmInfo extends StatelessWidget {
+	final String name;
+	final DateTime at;
+	final double meanness;
+	AlarmInfo({required this.name, required this.at, required this.meanness});
 	@override
 	Widget build(BuildContext context) {
 		VerticalDivider div = VerticalDivider(
@@ -18,15 +23,15 @@ class AlarmInfo extends StatelessWidget {
 			child: Center(
 				child: Row(
 					children: [
-						Text("06:30"),
+						Text(at.hour.toString() + ":" + at.minute.toString()),
 						Spacer(),
 						div,
 						Spacer(),
-						Text("-2:31"),
+						Text(name),
 						Spacer(),
 						div,
 						Spacer(),
-						Text("0.6")
+						Text(meanness.toString())
 					]
 				))
 			)

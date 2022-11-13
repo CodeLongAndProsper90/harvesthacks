@@ -13,6 +13,20 @@ class HomePageState extends State<HomePage> {
 
 	@override
 	Widget build(BuildContext context) {
+		return FutureBuilder(
+		future: get_alarms(),
+		builder: (BuildContext context, AsyncSnapshot<List<Alarm>> snapshot) {
+		print(snapshot.hasData);
+		if (!snapshot.hasData) {
+			return Scaffold(
+			body: Center(
+				child: SizedBox(
+					width: 200,
+					height: 200,
+					child: CircularProgressIndicator()
+			)));
+		} else {
+		var alarms = snapshot.data!.map((a) => AlarmInfo(name: a.name, at: a.at, meanness: a.prev_meanness)).toList();
 		return Scaffold(
 			body: Center(
 				child: ListView(
@@ -35,21 +49,12 @@ class HomePageState extends State<HomePage> {
 									Text("30", style: TextStyle(fontSize: 72.0)),
 									]),
 							Text("All alarms:"),
-						]))),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
-					AlarmInfo(),
+						]+alarms))),
 					]
 				)
 			)
 		);
+		}
+		});
 	}
 }

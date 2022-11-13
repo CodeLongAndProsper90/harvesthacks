@@ -41,7 +41,6 @@ dependencies:
   analog_clock: any
   qr_code_scanner: ^1.0.1
   svgator_player_flutter: ^2.0.0
-  webview_flutter: any
   path_provider: any
   
 

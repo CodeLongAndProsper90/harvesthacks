@@ -7,6 +7,7 @@ import 'package:risin/pages/initial.dart';
 import 'package:risin/pages/qrscanner.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:analog_clock/analog_clock.dart';
+import 'package:just_audio/just_audio.dart';
 
 enum AlarmStopMethod {
   button,
@@ -15,7 +16,8 @@ enum AlarmStopMethod {
 
 class AlarmPage extends StatefulWidget {
   final AlarmStopMethod stopMethod;
-  const AlarmPage({Key? key, required this.stopMethod}) : super(key: key);
+	final Sound sound;
+  const AlarmPage({Key? key, required this.stopMethod, required this.sound}) : super(key: key);
 
   @override
   State<AlarmPage> createState() => _AlarmPageState();
@@ -41,7 +43,13 @@ class _AlarmPageState extends State<AlarmPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+		final player = AudioPlayer();
+
+    return FutureBuilder(
+		future: player.setUrl("asset:${widget.sound.file}"),
+		builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+		player.play();
+		return Container(
       padding: const EdgeInsets.all(10.0),
       child: Center(
           child: Column(
@@ -67,26 +75,38 @@ class _AlarmPageState extends State<AlarmPage> {
           const Expanded(child: SizedBox.shrink()),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               SizedBox(),
-              TextButton(
+              ElevatedButton(
                   onPressed: null,
                   child: Text(
                     "Stop",
                     style: TextStyle(
                         fontSize: 20, color: Color.fromARGB(255, 190, 18, 18)),
-                  )),
+                  ),
+									style: ElevatedButton.styleFrom(
+										fixedSize: Size(50, 50),
+										shape: CircleBorder()
+									),
+							),
               SizedBox(width: 40),
-              TextButton(
+              ElevatedButton(
                   onPressed: null,
                   child: Text(
                     "Snooze",
                     style: TextStyle(fontSize: 20),
-                  ))
+                  ),
+									style: ElevatedButton.styleFrom(
+										fixedSize: Size(50, 50),
+										backgroundColor: Colors.orange,
+										shape: CircleBorder()
+									)
+							)
             ],
           )
         ],
       )),
     );
+		});
   }
 }

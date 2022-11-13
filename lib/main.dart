@@ -8,8 +8,14 @@ import 'package:risin/pages/initial.dart';
 import 'package:risin/pages/home_page.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_alarm_background_trigger/flutter_alarm_background_trigger.dart';
+import 'package:flutter_alarm_background_trigger/alarm_methods.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // initialize Required for alarm events to bind with flutter method channel
+  FlutterAlarmBackgroundTrigger.initialize();
   runApp(const MyApp());
 }
 
@@ -70,7 +76,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
+
+	 var alarmPlugin = FlutterAlarmBackgroundTrigger();
+	 alarmPlugin.requestPermission().then((isGranted){
+		if(isGranted){
+			alarmPlugin.onForegroundAlarmEventHandler((alarm){
+				Sound sound = compute(alarm[0].payload!["timezone_delta"], alarm[0].payload!["time_to_wake"], alarm[0].payload!["prev_meanness"]);
+				Navigator.push(context, MaterialPageRoute(builder: (context) => AlarmPage(stopMethod: AlarmStopMethod.qrscan, sound: sound))); 
+
+			});
+		}
+	});
     // by the _incrementCounter method above.
     //
     // The Flutter framework has been optimized to make rerunning build methods

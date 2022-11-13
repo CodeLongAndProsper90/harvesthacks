@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+		  debugShowCheckedModeBanner: false,
+      title: 'Risin\'',
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: const TextTheme(
@@ -63,24 +64,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    var alarmPlugin = FlutterAlarmBackgroundTrigger();
-    alarmPlugin.requestPermission().then((isGranted) {
-      if (isGranted) {
-        alarmPlugin.onForegroundAlarmEventHandler((alarm) {
-          print("BEEP");
-          Sound sound = compute(
-              alarm[0].payload!["timezone_delta"],
-              alarm[0].payload!["time_to_wake"],
-              alarm[0].payload!["prev_meanness"]);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AlarmPage(
-                      stopMethod: AlarmStopMethod.button, sound: sound)));
-        });
-      }
-    });
-
     return FutureBuilder(
         future: DataManager().load(),
         builder: (BuildContext context, AsyncSnapshot<bool> data) {

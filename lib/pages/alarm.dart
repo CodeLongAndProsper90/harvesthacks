@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -6,8 +7,10 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:risin/pages/initial.dart';
 import 'package:risin/pages/qrscanner.dart';
 import 'package:risin/system/compute_alarm.dart';
+import 'package:risin/pages/home_page.dart';
 import 'package:analog_clock/analog_clock.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:risin/backend/datamanger.dart';
 
 enum AlarmStopMethod {
   button,
@@ -17,7 +20,8 @@ enum AlarmStopMethod {
 class AlarmPage extends StatefulWidget {
   final AlarmStopMethod stopMethod;
 	final Sound sound;
-  const AlarmPage({Key? key, required this.stopMethod, required this.sound}) : super(key: key);
+	final int id;
+  const AlarmPage({Key? key, required this.stopMethod, required this.sound, required this.id}) : super(key: key);
 
   @override
   State<AlarmPage> createState() => _AlarmPageState();
@@ -28,7 +32,7 @@ class _AlarmPageState extends State<AlarmPage> {
   Barcode? result;
   QRViewController? controller;
   bool stopUnlocked = false;
-
+/*
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
@@ -40,17 +44,27 @@ class _AlarmPageState extends State<AlarmPage> {
       controller!.resumeCamera();
     }
   }
+	*/
+	int snooze = 10;
+	bool red = true;
 
   @override
   Widget build(BuildContext context) {
 		final player = AudioPlayer();
+		print(widget.sound.file);
 
     return FutureBuilder(
-		future: player.setUrl("asset:${widget.sound.file}"),
+		future: Future.wait([player.setUrl("https://ta.rdis.dev/risin/${widget.sound.file}"), player.setLoopMode(LoopMode.one), player.setVolume(2), player.play()]),
 		builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
 		print("BOOP");
-		player.play();
-		return Container(
+		
+		Color color = Colors.red;
+
+		return Scaffold(
+		body: AnimatedContainer(
+			duration: Duration(seconds: 1),
+			color: red ? Colors.red : Colors.yellow,
+			curve: Curves.fastOutSlowIn,
       padding: const EdgeInsets.all(10.0),
       child: Center(
           child: Column(
@@ -60,54 +74,58 @@ class _AlarmPageState extends State<AlarmPage> {
             style: TextStyle(fontSize: 40),
           ),
           AnalogClock(
-						decoration: BoxDecoration(
-							border: Border.all(width: 2.0, color: Colors.black),
-							color: Colors.transparent,
-							shape: BoxShape.circle),
 						showSecondHand: false,
+						showDigitalClock: false,
             isLive: false,
             width: 200.0,
 						height: 200.0,
             datetime: DateTime.now(),
           ),
+					/*
           QRScanner(onScanned: () => {
             Navigator.push(context, MaterialPageRoute(builder: (context) => InitialPage()),)
           }),
+				  */	
           const Expanded(child: SizedBox.shrink()),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(),
-              ElevatedButton(
-                  onPressed: null,
+              TextButton(
+                  onPressed: () async {
+										await player.stop();
+										print("Clicked");
+										Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+									},
                   child: Text(
                     "Stop",
-                    style: TextStyle(
-                        fontSize: 20, color: Color.fromARGB(255, 190, 18, 18)),
                   ),
-									style: ElevatedButton.styleFrom(
-										fixedSize: Size(50, 50),
-										shape: CircleBorder()
+									style: TextButton.styleFrom(
+										foregroundColor: Colors.white,
+										backgroundColor: Colors.red
 									),
 							),
               SizedBox(width: 40),
-              ElevatedButton(
-                  onPressed: null,
+              TextButton(
+                  onPressed: () async {
+										player.stop();
+										await Future.delayed(Duration(minutes: snooze));
+										snooze = (snooze / 2) as int;
+										player.play();
+									},
                   child: Text(
                     "Snooze",
-                    style: TextStyle(fontSize: 20),
                   ),
-									style: ElevatedButton.styleFrom(
-										fixedSize: Size(50, 50),
+									style: TextButton.styleFrom(
+										foregroundColor: Colors.white,
 										backgroundColor: Colors.orange,
-										shape: CircleBorder()
 									)
 							)
             ],
           )
         ],
       )),
-    );
+    ));
 		});
   }
 }

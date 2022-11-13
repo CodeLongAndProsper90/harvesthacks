@@ -69,7 +69,7 @@ flutter:
 
   assets:
     - images/
-    - audio/
+    - audio/music/gadget.mp3
 
   fonts:
     - family: Red Hat Text

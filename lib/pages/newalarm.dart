@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:risin/backend/alarm.dart';
@@ -6,6 +7,13 @@ import 'package:flutter_alarm_background_trigger/alarm_methods.dart';
 import 'package:risin/backend/datamanger.dart';
 import 'package:risin/pages/home_page.dart';
 import 'package:risin/widgets/time_bg.dart';
+import 'package:risin/system/compute_alarm.dart';
+import 'package:risin/pages/alarm.dart';
+
+Duration sub(TimeOfDay a, TimeOfDay b) {
+  assert(a.hour >= b.hour);
+  return Duration(hours: a.hour - b.hour, minutes: a.minute - b.minute);
+}
 
 class NewAlarmPage extends StatefulWidget {
   late final Alarm alarm;
@@ -53,7 +61,7 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
                 widget.alarm.minute = x.minute;
               },
               child: Container(
-                child: Text("${widget.alarm.hour}:${widget.alarm.minute}",
+                child: Text("${widget.alarm.hour}:${widget.alarm.minute < 10 ? '0' + widget.alarm.minute.toString() : widget.alarm.minute}",
                     style: const TextStyle(fontSize: 106)),
               )),
           Slider(
@@ -68,25 +76,25 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
               }),
           TextButton(
               onPressed: () async {
-                DataManager().addAlarm(widget.alarm);
-
-                var dateTime = DateTime.now();
-
-                alarmPlugin.addAlarm(
-                    // Required
-                    DateTime.now(),
-
-                    //Optional
-                    payload: {
-                      "timezone_delta": 0,
-                      "time_to_wake": widget.alarm.time_to_wake,
-                      "prev_meanness": widget.alarm.prev_meanness,
-                      "id": widget.alarm.id
-                    },
-
-                    // screenWakeDuration: For how much time you want
-                    // to make screen awake when alarm triggered
-                    screenWakeDuration: Duration(minutes: 1));
+							DataManager data = DataManager();
+							await data.load();
+							data.addAlarm(widget.alarm);
+                Timer(
+                    sub(
+                        TimeOfDay(
+                            hour: widget.alarm.hour,
+                            minute: widget.alarm.minute),
+                        TimeOfDay.now()), () {
+									
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AlarmPage(
+															id: widget.alarm.id,
+                              sound: compute(0, widget.alarm.time_to_wake,
+                                  widget.alarm.prev_meanness),
+                              stopMethod: AlarmStopMethod.button)));
+                });
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => HomePage()),

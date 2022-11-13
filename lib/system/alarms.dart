@@ -64,3 +64,8 @@ Future<List<Alarm>> get_alarms() async {
 	return data.map((a) => cast<Alarm>(a)!).toList();
 }
 
+Future<void> delete_alarm(String name) async {
+	var alarms = await get_alarms();
+	alarms = alarms.where((a) => a.name!=name).toList();
+	await save_alarms(alarms);
+}

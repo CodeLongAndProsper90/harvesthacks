@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:risin/pages/alarm.dart';
+import 'package:risin/pages/analog.dart';
 import 'package:risin/pages/qrscanner.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/inital.dart';
+import 'package:risin/pages/card.dart';
+import 'package:risin/pages/sales.dart';
 
 void main() {
   runApp(const MyApp());
@@ -75,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: InitialPage(),
+      body: AnalogClock(howmean: 2, time: DateTime.now()),
     );
   }
 }

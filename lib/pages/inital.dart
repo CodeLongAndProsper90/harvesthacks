@@ -88,7 +88,7 @@ class _InitialPageState extends State<InitialPage>
                       "Risin'",
                       style: TextStyle(fontSize: 36.0, color: textcolor),
                     ),
-                    Text("Press me to start"),
+                    const Text("Press me to start"),
                     Spacer(),
                   ]))));
     }));

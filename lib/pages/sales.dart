@@ -20,9 +20,7 @@ class AnalogClock extends StatelessWidget {
             child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext (context) {
-                    return const SettingsPage();
-                  })));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings()));
                 },
                 child: ListView(
                   scrollDirection: Axis.vertical,

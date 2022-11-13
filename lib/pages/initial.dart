@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:risin/pages/newalarm.dart';
 import 'package:risin/system/compute_alarm.dart';
 import 'package:risin/pages/inital_alarm.dart';
 import 'package:risin/widgets/time_bg.dart';
@@ -41,7 +42,7 @@ class _InitialPageState extends State<InitialPage>
 				onTap: () {
 					Navigator.push(
 							context,
-							MaterialPageRoute(builder: (context) => InitialAlarmPage()),
+							MaterialPageRoute(builder: (context) => NewAlarmPage()),
 						);
 				},
 				child: TimeBg(

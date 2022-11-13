@@ -1,22 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 T? cast<T>(x) => x is T ? x : null;
 
 class Alarm {
-	final DateTime at;
-	final bool repeat_weekly;
-	final int time_to_wake;
-	final int last_timezone;
-	final double prev_meanness;
-	final String name;
+	DateTime at;
+	bool repeat_weekly;
+	int time_to_wake;
+	int last_timezone;
+	double prev_meanness;
+	String name;
 
 	Alarm({required this.at, required this.repeat_weekly, required this.time_to_wake, required this.last_timezone, required this.name, required this.prev_meanness});
 
 	Map<String, dynamic> toJson() {
 		return {
-			"at": at.toIso8601String(),
+			"at": at.toString(),
 			"repeat": repeat_weekly,
 			"time_to_wake": time_to_wake,
 			"last_timezone": last_timezone,

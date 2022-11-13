@@ -1,101 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:risin/backend/alarm.dart';
+import 'package:risin/backend/datamanger.dart';
 import 'package:risin/widgets/alarm_time.dart';
-import 'package:risin/system/alarms.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:risin/pages/newalarm.dart';
 import 'dart:io';
 
+import 'package:risin/widgets/time_bg.dart';
+
 int compareTimeOfDay(TimeOfDay a, TimeOfDay b) {
-	if (a.hour < b.hour)
-		return -1;
-	else if (b.hour > a.hour)
-		return 1;
-	else {
-		if (a.minute < b.minute)
-			return -1;
-		else if (b.minute > a.minute)
-			return 1;
-		else
-		return 0;
-	}
+  if (a.hour < b.hour) {
+    return -1;
+  } else if (b.hour > a.hour) {
+    return 1;
+  } else {
+    if (a.minute < b.minute) {
+      return -1;
+    } else if (b.minute > a.minute) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 }
+
 class HomePage extends StatefulWidget {
-	
-	@override
-	State<HomePage> createState() => HomePageState();
+  @override
+  State<HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    var alarms = DataManager().getAlarms();
+    alarms.sort((a, b) => compareTimeOfDay(a.timeOfDay(), b.timeOfDay()));
+    var alarms_w = alarms
+        .map((a) => AlarmInfo(
+              alarm: a,
+            ))
+        .toList();
 
-	@override
-	Widget build(BuildContext context) {
-		return FutureBuilder(
-		future: get_alarms(),
-		builder: (BuildContext context, AsyncSnapshot<List<Alarm>> snapshot) {
-		print(snapshot.hasData);
-		if (!snapshot.hasData) {
-			return Scaffold(
-			body: Center(
-				child: SizedBox(
-					width: 200,
-					height: 200,
-					child: CircularProgressIndicator()
-			)));
-		} else {
-		var alarms = snapshot.data!;
-		alarms.sort((a, b) => compareTimeOfDay(a.at, b.at));
-		var alarms_w = alarms.map((a) => AlarmInfo(name: a.name, at: a.at, meanness: a.prev_meanness)).toList();
-		return Scaffold(
-			body: Center(
-				child: ListView(
-					children: [
-						Padding(
-						padding: EdgeInsets.all(4.0),
-						child: Card(
-						child: Column(
-							children: [
-							Text("Next alarm at:"),
-							Row(
-								crossAxisAlignment: CrossAxisAlignment.center,
-								mainAxisAlignment: MainAxisAlignment.center,
-								children: [
-									Text(alarms.length > 0 ? alarms[0].at.hour.toString() : "  ", style: TextStyle(fontSize: 72.0)),
-									Padding(
-										padding: EdgeInsets.symmetric(horizontal: 32.0),
-										child: Text(":", style: TextStyle(fontSize: 72.0)),
-									),
-									Text(alarms.length > 0 ? alarms[0].at.minute.toString() : " ", style: TextStyle(fontSize: 72.0)),
-									]),
-							Text("All alarms:"),
-							TextButton(
-								child: Text("Add an alarm"),
-								onPressed: () {
-									Navigator.push(context, MaterialPageRoute(builder: (context) => NewAlarmPage()));
-								})
-						]+alarms_w + [
-							Card(
-								child: TextButton(
-									child: Text("RESET"),
-									onPressed: () async {
-										var a = await get_alarms();
-										for (var x in a) {
-											await delete_alarm(x.name);
-										}
-										String filePath =
-							        (await getApplicationDocumentsDirectory()).path + "/used";
-										File f = await (File(filePath).create());
-										await f.writeAsString("");
-									},
-									style: TextButton.styleFrom(
-										foregroundColor: Colors.white,
-										backgroundColor: Colors.red,
-										)))
-						]))),
-					]
-				)
-			)
-		);
-		}
-		});
-	}
+    Alarm? nextAlarm = alarms.isEmpty ? null : alarms[0];
+
+    return Scaffold(
+        body: TimeBg(
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Center(
+            child: Column(children: [
+          const Text("You are waking up at:"),
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(nextAlarm != null ? nextAlarm.hour.toString() : "  ",
+                    style:
+                        const TextStyle(fontSize: 72.0, color: Colors.white)),
+                const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Text(
+                      ":",
+                      style: TextStyle(fontSize: 72.0, color: Colors.white),
+                    )),
+                Text(nextAlarm != null ? nextAlarm.minute.toString() : "  ",
+                    style:
+                        const TextStyle(fontSize: 72.0, color: Colors.white)),
+              ]),
+          const Text("Alarm Schedule:"),
+          TextButton(
+              child: const Text("Add an alarm"),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewAlarmPage()));
+              }),
+          Expanded(child: ListView(children: alarms_w)),
+          TextButton(
+              onPressed: () async {
+                DataManager().clearAlarms();
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.red,
+              ),
+              child: const Text("RESET"))
+        ])),
+      ),
+    ));
+  }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:risin/pages/home_page.dart';
 import 'package:risin/pages/newalarm.dart';
-import 'package:risin/system/compute_alarm.dart';
-import 'package:risin/pages/inital_alarm.dart';
 import 'package:risin/widgets/time_bg.dart';
 
 class InitialPage extends StatefulWidget {
@@ -40,7 +38,7 @@ class _InitialPageState extends State<InitialPage>
 				final Size biggest = constraints.biggest;
 				return GestureDetector(
 				onTap: () {
-					Navigator.push(
+          Navigator.push(
 							context,
 							MaterialPageRoute(builder: (context) => NewAlarmPage()),
 						);
@@ -63,8 +61,8 @@ class _InitialPageState extends State<InitialPage>
 									color: DateTime.now().hour >= 19 ? Colors.white : Colors.black,
 								),
 							),
-							Text("Press me to start"),
-							Spacer(),
+							const Text("Press me to start"),
+							const Spacer(),
 						]
 						)
 					)

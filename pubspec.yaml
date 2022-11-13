@@ -41,10 +41,11 @@ dependencies:
   analog_clock: any
   qr_code_scanner: ^1.0.1
   path_provider: any
-  g_json: any
-  
+  json_annotation: ^4.7.0
 
 dev_dependencies:
+  build_runner: ^2.3.2
+  json_serializable: ^6.5.4
   flutter_test:
     sdk: flutter
 

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TimeBg extends StatefulWidget {
-	final Widget child;
-	TimeBg({required this.child});
+  final Widget child;
+  TimeBg({required this.child});
 
-	@override
-	State<TimeBg> createState() => TimeBgState();
+  @override
+  State<TimeBg> createState() => TimeBgState();
 }
 
 class TimeBgState extends State<TimeBg> {
-
-	Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     var morning_grad = [Colors.cyan.shade100, Colors.yellow.shade100];
 
     var afternoon_grad = [
@@ -25,26 +24,27 @@ class TimeBgState extends State<TimeBg> {
 
     var night_grad = [Color(0xFF01426D), Color(0xFF01162E)];
 
-		final List<Color> chosen;
-		DateTime n = DateTime.now();
-		if (n.hour >= 17)
-			chosen = evening_grad;
-		else if (n.hour >= 19)
-			chosen = night_grad;
-		else if (n.hour >= 12)
-			chosen = afternoon_grad;
-		else
-			chosen = morning_grad;
+    final List<Color> chosen;
+    int hour = DateTime.now().hour;
 
-		return Scaffold(
-			body: Container(
-				decoration: BoxDecoration(
-					gradient: LinearGradient(
-						begin: Alignment.bottomLeft,
-						end: Alignment.topRight,
-						colors: chosen
-					),),
-				child: widget.child
-				));
-	}
+    if (hour >= 19 || hour <= 7) {
+      chosen = night_grad;
+    } else if (hour >= 17) {
+      chosen = evening_grad;
+    } else if (hour >= 12) {
+      chosen = afternoon_grad;
+    } else {
+      chosen = morning_grad;
+    }
+
+    return Scaffold(
+        body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: chosen),
+            ),
+            child: widget.child));
+  }
 }

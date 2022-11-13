@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
 		if(isGranted){
 			alarmPlugin.onForegroundAlarmEventHandler((alarm){
 				Sound sound = compute(alarm[0].payload!["timezone_delta"], alarm[0].payload!["time_to_wake"], alarm[0].payload!["prev_meanness"]);
-				Navigator.push(context, MaterialPageRoute(builder: (context) => AlarmPage(stopMethod: AlarmStopMethod.qrscan, sound: sound))); 
+				Navigator.push(context, MaterialPageRoute(builder: (context) => AlarmPage(stopMethod: AlarmStopMethod.button, sound: sound))); 
 
 			});
 		}

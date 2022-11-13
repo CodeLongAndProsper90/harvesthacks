@@ -6,16 +6,17 @@ import 'package:just_audio/just_audio.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:risin/system/compute_alarm.dart';
 
-class QRScannerPage extends StatefulWidget {
-  const QRScannerPage({Key? key}) : super(key: key);
+class QRScanner extends StatefulWidget {
+  final void Function() onScanned;
+
+  const QRScanner({Key? key, required this.onScanned}) : super(key: key);
 
   @override
-  State<QRScannerPage> createState() => _QRScannerPageState();
+  State<QRScanner> createState() => _QRScannerState();
 }
 
-class _QRScannerPageState extends State<QRScannerPage> {
+class _QRScannerState extends State<QRScanner> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  Barcode? result;
   QRViewController? controller;
 
   // In order to get hot reload to work we need to pause the camera if the platform
@@ -32,26 +33,14 @@ class _QRScannerPageState extends State<QRScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text(
-                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  : Text('Scan a code'),
-            ),
-          )
-        ],
+    return Expanded(
+      flex: 5,
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        child: QRView(
+          key: qrKey,
+          onQRViewCreated: _onQRViewCreated,
+        ),
       ),
     );
   }
@@ -60,9 +49,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (scanData.format == BarcodeFormat.qrcode) {
-        setState(() {
-          result = scanData;
-        });
+        widget.onScanned();
       }
     });
   }

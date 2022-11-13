@@ -3,7 +3,7 @@ import 'package:risin/system/alarms.dart';
 
 class AlarmInfo extends StatelessWidget {
 	final String name;
-	final DateTime at;
+	final TimeOfDay at;
 	final double meanness;
 	AlarmInfo({required this.name, required this.at, required this.meanness});
 	@override

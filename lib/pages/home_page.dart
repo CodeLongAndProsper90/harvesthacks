@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:risin/widgets/alarm_time.dart';
-import 'package:analog_clock/analog_clock.dart';
 import 'package:risin/system/alarms.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:risin/pages/newalarm.dart';
 import 'dart:io';
 
+int compareTimeOfDay(TimeOfDay a, TimeOfDay b) {
+	if (a.hour < b.hour)
+		return -1;
+	else if (b.hour > a.hour)
+		return 1;
+	else {
+		if (a.minute < b.minute)
+			return -1;
+		else if (b.minute > a.minute)
+			return 1;
+		else
+		return 0;
+	}
+}
 class HomePage extends StatefulWidget {
 	
 	@override
@@ -29,7 +43,7 @@ class HomePageState extends State<HomePage> {
 			)));
 		} else {
 		var alarms = snapshot.data!;
-		alarms.sort((a, b) => a.at.compareTo(b.at));
+		alarms.sort((a, b) => compareTimeOfDay(a.at, b.at));
 		var alarms_w = alarms.map((a) => AlarmInfo(name: a.name, at: a.at, meanness: a.prev_meanness)).toList();
 		return Scaffold(
 			body: Center(
@@ -56,7 +70,7 @@ class HomePageState extends State<HomePage> {
 							TextButton(
 								child: Text("Add an alarm"),
 								onPressed: () {
-									Navigator.push(context, MaterialPageRoute(builder: (context) => AddAlarm()));
+									Navigator.push(context, MaterialPageRoute(builder: (context) => NewAlarmPage()));
 								})
 						]+alarms_w + [
 							Card(

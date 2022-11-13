@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 T? cast<T>(x) => x is T ? x : null;
 
 class Alarm {
-	DateTime at;
+	TimeOfDay at;
 	bool repeat_weekly;
 	int time_to_wake;
 	int last_timezone;
@@ -16,8 +16,9 @@ class Alarm {
 	Alarm({required this.at, required this.repeat_weekly, required this.time_to_wake, required this.last_timezone, required this.name, required this.prev_meanness});
 
 	Map<String, dynamic> toJson() {
+		DateTime d = DateTime(1969, 1, 1, at.hour, at.minute);
 		return {
-			"at": at.toString(),
+			"at": d.toString(),
 			"repeat": repeat_weekly,
 			"time_to_wake": time_to_wake,
 			"last_timezone": last_timezone,
@@ -27,7 +28,7 @@ class Alarm {
 	}
 	Alarm fromJson(Map<String, dynamic> j) {
 		return Alarm(
-			at: DateTime.parse(j["at"]),
+			at: TimeOfDay.fromDateTime(DateTime.parse(j["at"]))!,
 			repeat_weekly: j["repeat"],
 			time_to_wake: j["time_to_wake"],
 			last_timezone: j["last_timezone"],
@@ -61,8 +62,11 @@ Future<List<Alarm>> get_alarms() async {
 	String data_s = await f.readAsString();
 	if (data_s == "")
 		return [];
+	print(data_s);
 	List<dynamic> data = json.decode(data_s);
-	return data.map((a) => cast<Alarm>(a)!).toList();
+	List<Alarm> fin = data.cast<Alarm>();
+	print(fin);
+	return fin;
 }
 
 Future<void> delete_alarm(String name) async {

@@ -8,7 +8,7 @@ class NewAlarmPage extends StatefulWidget {
   NewAlarmPage({super.key, Alarm? alarm}) {
     if (alarm == null) {
       this.alarm = Alarm(
-          at: DateTime.now(),
+          at: TimeOfDay.now(),
           name: "New Alarm",
           time_to_wake: -1,
           last_timezone: DateTime.now().timeZoneOffset.inHours,
@@ -48,10 +48,11 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
       children: [
         GestureDetector(
           onTap: () async {
-            widget.alarm.at = await showTimePicker(
-              initialTime: TimeOfDay.fromDateTime(widget.alarm.at),
+            var x = await showTimePicker(
+              initialTime: widget.alarm.at,
               context: context
             );
+						widget.alarm.at = x!;
           },
           child: Container(
             child: Text("${widget.alarm.at.hour}:${widget.alarm.at.minute}", style: const TextStyle(fontSize: 106)), 
@@ -66,7 +67,21 @@ class _NewAlarmPageState extends State<NewAlarmPage> {
             setState(() {
               widget.alarm.prev_meanness = value;
             });
+						}),
+				TextButton(
+				onPressed: () async {
+					await add_alarm(widget.alarm);
+					print(await get_alarms());
+					Navigator.pop(context);
+				},
+				child: Text("Add alarm"),
+				style: TextButton.styleFrom(
+					backgroundColor: Colors.green,
+					foregroundColor: Colors.white
+				))
       ],
-    )));
+    )
+		)
+		);
   }
 }

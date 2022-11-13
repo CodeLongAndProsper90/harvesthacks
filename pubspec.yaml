@@ -31,7 +31,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    uses-material-design: true
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,7 +40,6 @@ dependencies:
   just_audio: ^0.9.30
   analog_clock: any
   qr_code_scanner: ^1.0.1
-  svgator_player_flutter: ^2.0.0
   path_provider: any
   
 

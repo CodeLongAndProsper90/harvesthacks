@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
 			builder: (BuildContext context, AsyncSnapshot<bool> data) {
 				if (data.hasData) {
 					return Scaffold(
-						body: !data.data! ? HomePage() : InitialPage()
+						body: data.data! ? HomePage() : InitialPage()
 					);
 				} else {
 					return CircularProgressIndicator();
